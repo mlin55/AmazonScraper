@@ -1,4 +1,3 @@
-from xml.dom.minidom import Element
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -6,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import time
 
 from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
@@ -15,15 +13,14 @@ chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/
 s = Service('/Users/matthewlin/chromedriver')
 driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
-driver.get('https://www.amazon.com/s?i=fashion-mens&bbn=19289251011&rh=n%3A7141123011%2Cn%3A19289251011%2Cn%3A7147441011%2Cn%3A679255011&s=date-desc-rank&ds=v1%3A6vrtGgKZxYAVAyhzhU0Rb07V3vFrgeoHQOfDKM5F76c&pd_rd_r=53e15505-bc01-44c9-9ced-e7db1a2011fa&pd_rd_w=o8x3F&pd_rd_wg=oOmbg&pf_rd_p=2216c49b-afd0-4d36-9b66-e775a7e6c9ae&pf_rd_r=5AXK5T11050539W7BBEM&qid=1658435037&rnid=7147441011&ref=Topcard_QuadCat_AF_July_OTC_2_Shoes')
-
 class Product:
-  def __init__(self, name = '', company = '', starRating = '', numReviews = '', price = ''):
+  def __init__(self, name = '', company = '', starRating = '', numReviews = '', price = '', link = ''):
     self.name = name
     self.company = company
     self.starRating = starRating
     self.numReviews = numReviews
     self.price = price
+    self.link = link
 
 # finds all elements that match selector in given location and returns the first one, or none if there aren't any
 def findProperty(loc, selector):
@@ -58,9 +55,19 @@ def printProductInfo(name, company, starRating, numReviews, price):
     print(f"NUM REVIEWS: Unavailable for this item")
   print(f"PRICE: {price}\n")
 
+
+# go to product results page
+PRODUCT_NAME = "Swiffers Sweepers"
+MAX_PAGE_COUNT = 10
+driver.get('https://www.amazon.com')
+searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
+searchBar.send_keys(PRODUCT_NAME)
+searchBar.send_keys(Keys.RETURN)
+
 productArr = []
 nextPage = 'placeholder'
-while nextPage:
+pageCount = 0
+while pageCount < MAX_PAGE_COUNT and nextPage:
   # find next page button
   if elementExists(driver, "a[aria-label^='Go to next page']"):
     nextPage = findProperty(driver, "a[aria-label^='Go to next page']")
@@ -68,7 +75,7 @@ while nextPage:
     nextPage = None
 
   # get product info
-  products = driver.find_elements(By.CSS_SELECTOR, "div[class='a-section a-spacing-small puis-padding-left-micro puis-padding-right-micro']")
+  products = driver.find_elements(By.CSS_SELECTOR, "div[class='s-card-container s-overflow-hidden aok-relative puis-expand-height puis-include-content-margin s-latency-cf-section s-card-border']")
   for product in products:
     name = findProperty(product, "span[class='a-size-base-plus a-color-base a-text-normal']")
     company = findProperty(product, "span[class='a-size-base-plus a-color-base']")
@@ -76,13 +83,14 @@ while nextPage:
     numReviews = findProperty(product, "span[class='a-size-base s-underline-text']")
     priceWhole = findProperty(product, "span[class='a-price-whole']")
     priceFrac = findProperty(product, "span[class='a-price-fraction']")
+    link = findProperty(product, "a[class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']")
     price = ''
-    if priceWhole:
+    if priceWhole and priceWhole.text != '':
       price += priceWhole.text
     else:
       price += '0'
     price += '.'
-    if priceFrac:
+    if priceFrac  and priceFrac.text != '':
       price += priceFrac.text
     else:
       price += '00'
@@ -90,15 +98,18 @@ while nextPage:
     # printProductInfo(name, company, starRating, numReviews, price)
     productArr.append(Product(
       name.text if name else None,
-      company.text if name else None, 
+      company.text if company else None,
       starRating.get_attribute('aria-label').split(' ')[0] if starRating else None,
-      numReviews.text if numReviews else None,
-      price if price else None
+      # filter out all non-numeric characters
+      ''.join(filter(str.isalnum, numReviews.text)) if numReviews else None,
+      price if price else None,
+      link.get_attribute('href') if link else None,
     ))
 
   # navigate to next page
   if nextPage:
     nextPage.click()
+    pageCount += 1
 
 driver.quit()
 
@@ -108,13 +119,45 @@ cheapest, mostExpensive, leastReviewed, mostReviewed, lowestSR, highestSR = Prod
 print(f"Total products found: {len(productArr)}")
 
 for product in productArr:
-  price = float(product.price)
-  # if price == 0 then the price was not recorded, so we don't want to include it
-  if minPrice > price and price != 0:
-    minPrice = price
-    cheapest = product
+  if product.price:
+    price = float(product.price)
+    # if price == 0 then the price was not recorded, so we don't want to include it
+    if minPrice > price and price != 0:
+      minPrice = price
+      cheapest = product
+    if maxPrice < price and price != 0:
+      maxPrice = price
+      mostExpensive = product
+
+  if product.numReviews:
+    numReviews = float(product.numReviews)
+    if minReviews > numReviews:
+      minReviews = numReviews
+      leastReviewed = product
+    if maxReviews < numReviews:
+      mostReviewed = product
+
+  if product.starRating:
+    starRating = float(product.starRating)
+    if minStarRating > starRating:
+      minStarRating = starRating
+      lowestSR = product
+    if maxStarRating < starRating:
+      maxStarRating = starRating
+      highestSR = product
+
 print(f"Cheapest product: {cheapest.name}")
-print(cheapest)
+print(f"Link: {cheapest.link}\n")
+print(f"Most expensive product: {mostExpensive.name}")
+print(f"Link: {mostExpensive.link}\n")
+print(f"Least reviewed product: {leastReviewed.name}")
+print(f"Link: {leastReviewed.link}\n")
+print(f"Most reviewed product: {mostReviewed.name}")
+print(f"Link: {mostReviewed.link}\n")
+print(f"Lowest star rating product (out of 5): {lowestSR.name}")
+print(f"Link: {lowestSR.link}\n")
+print(f"Highest star rating product (out of 5): {highestSR.name}")
+print(f"Link: {highestSR.link}\n")
 
 
 """
