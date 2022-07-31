@@ -7,6 +7,9 @@ class Product:
     self.price = price
     self.link = link
 
+  def assignScore(self, score = float('-inf')):
+    self.score = score
+
 def printProductInfo(name, company, starRating, numReviews, price):
   if name:
     print(f"NAME: {name.text}")
