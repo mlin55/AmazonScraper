@@ -9,7 +9,7 @@ from nav import findProperty, elementExists
 def scrape(productName, maxPageCount):
   chrome_options = Options()
   chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
-  s = Service('./chromedriver')
+  s = Service('scraper/chromedriver')
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
   # go to product results page
@@ -43,6 +43,7 @@ def scrape(productName, maxPageCount):
       numReviews = findProperty(product, "span[class='a-size-base s-underline-text']")
       priceWhole = findProperty(product, "span[class='a-price-whole']")
       priceFrac = findProperty(product, "span[class='a-price-fraction']")
+      image = findProperty(product, "img[data-image-latency='s-product-image']")
       link = findProperty(product, "a[class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']")
       price = ''
       if priceWhole and priceWhole.text != '':
@@ -57,13 +58,14 @@ def scrape(productName, maxPageCount):
 
       # printProductInfo(name, company, starRating, numReviews, price)
       productArr.append(Product(
-        name.text if name else None,
-        company.text if company else None,
-        starRating.get_attribute('aria-label').split(' ')[0] if starRating else None,
+        name.text if name else '',
+        company.text if company else '',
+        starRating.get_attribute('aria-label').split(' ')[0] if starRating else '',
         # filter out all non-numeric characters
-        ''.join(filter(str.isalnum, numReviews.text)) if numReviews else None,
-        price if price else None,
-        link.get_attribute('href') if link else None,
+        ''.join(filter(str.isalnum, numReviews.text)) if numReviews else '',
+        price if price else '',
+        image.get_attribute('src') if image else '',
+        link.get_attribute('href') if link else '',
       ))
 
     # navigate to next page

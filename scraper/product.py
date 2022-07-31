@@ -1,10 +1,11 @@
 class Product:
-  def __init__(self, name = '', company = '', starRating = '', numReviews = '', price = '', link = ''):
+  def __init__(self, name = '', company = '', starRating = '', numReviews = '', price = '', image = '', link = ''):
     self.name = name
     self.company = company
     self.starRating = starRating
     self.numReviews = numReviews
     self.price = price
+    self.image = image
     self.link = link
 
   def assignScore(self, score = float('-inf')):
