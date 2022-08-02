@@ -1,4 +1,4 @@
-from product import Product
+from scraper.product import Product
 
 def displaySignificantData(products):
   minPrice, maxPrice, minReviews, maxReviews, minStarRating, maxStarRating = float('inf'), float('-inf'), float('inf'), float('-inf'), float('inf'), float('-inf')
