@@ -6,10 +6,37 @@
 
 {% block body %}
 <div class="content">
-  <h1 style="text-align: center">Amazon Scraper</h1>
+  <h1>Amazon Scraper</h1>
+  <p style="text-align: center;">Enter the product you want to search for here, and Amazon Scraper will look over all
+    results from Amazon, sort them with a recommendation algorithm, and display them in order of most recommended to
+    least.</p>
   <form actions="/" method="POST">
     <input type="text" name="productInput" id="productInput">
-    <input type="submit" value="Add Task">
+    <input type="submit" value="Search">
   </form>
+  {% if products|length > 0 %}
+  <table>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Num Reviews</th>
+      <th>Stars</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+      <td>
+        <img src="{{product.image}}" />
+      </td>
+      <td>
+        <a href="{{product.link}}" target="_blank">{{product.name}}</a>
+      </td>
+      <td>{{product.price}}</td>
+      <td>{{product.numReviews}}</td>
+      <td>{{product.starRating}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
 </div>
 {% endblock %}

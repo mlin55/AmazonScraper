@@ -34,18 +34,18 @@ def displaySignificantData(products):
         maxStarRating = starRating
         highestSR = product
 
-  print(f"Cheapest product: {cheapest.name}")
-  print(f"Link: {cheapest.link}\n")
-  print(f"Most expensive product: {mostExpensive.name}")
-  print(f"Link: {mostExpensive.link}\n")
-  print(f"Least reviewed product: {leastReviewed.name}")
-  print(f"Link: {leastReviewed.link}\n")
-  print(f"Most reviewed product: {mostReviewed.name}")
-  print(f"Link: {mostReviewed.link}\n")
-  print(f"Lowest star rating product (out of 5): {lowestSR.name}")
-  print(f"Link: {lowestSR.link}\n")
-  print(f"Highest star rating product (out of 5): {highestSR.name}")
-  print(f"Link: {highestSR.link}\n")
+  # print(f"Cheapest product: {cheapest.name}")
+  # print(f"Link: {cheapest.link}\n")
+  # print(f"Most expensive product: {mostExpensive.name}")
+  # print(f"Link: {mostExpensive.link}\n")
+  # print(f"Least reviewed product: {leastReviewed.name}")
+  # print(f"Link: {leastReviewed.link}\n")
+  # print(f"Most reviewed product: {mostReviewed.name}")
+  # print(f"Link: {mostReviewed.link}\n")
+  # print(f"Lowest star rating product (out of 5): {lowestSR.name}")
+  # print(f"Link: {lowestSR.link}\n")
+  # print(f"Highest star rating product (out of 5): {highestSR.name}")
+  # print(f"Link: {highestSR.link}\n")
 
 # Assigns each product in the list a value based on the number of reviews, price, and star rating, then returns them in sorted decreasing order
 def assignRecommendationScores(products):
@@ -66,7 +66,7 @@ def assignRecommendationScores(products):
   
   # score = variance(numReviews) * 0.4 + variance(price) * 0.4 + variance(starRating) * 0.2 idk im not a statistician
   for i in range(N):
-    if not products[i].numReviews or not products[i].price or not products[i].starRating:
+    if not products[i].numReviews or not products[i].price or float(products[i].price) == 0 or not products[i].starRating:
       products[i].assignScore(float('-inf'))
       continue
 
