@@ -6,34 +6,43 @@
 
 {% block body %}
 <div class="content">
-  <h1>Amazon Scraper</h1>
-  <p style="text-align: center;">Enter the product you want to search for here, and Amazon Scraper will look over all
+  <h1 class="title">Amazon Scraper</h1>
+  <p class="description-text">Enter the product you want to search for here, and Amazon
+    Scraper will look over all
     results from Amazon, sort them with a recommendation algorithm, and display them in order of most recommended to
     least.</p>
-  <form actions="/" method="POST">
-    <input type="text" name="productInput" id="productInput">
-    <input type="submit" value="Search">
+  <form actions="/" method="POST" style="width: 70%">
+    <div class="search-form">
+      <input type="text" class="form-control" placeholder="Product Name" aria-label="Product Name"
+        aria-describedby="button-addon2" name="productInput">
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+    </div>
   </form>
   {% if products|length > 0 %}
-  <table>
+  <p class="product-name-text"><strong>Search results for: {{productName}}</strong></p>
+  <table class="table table-bordered" id="product-display-table">
     <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Num Reviews</th>
-      <th>Stars</th>
+      <th scope="col">#</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Num Reviews</th>
+      <th scope="col">Stars</th>
     </tr>
-    {% for product in products %}
+    {% for i in range(products|length) %}
     <tr>
-      <td>
-        <img src="{{product.image}}" />
+      <th scope="row">{{i + 1}}.</th>
+      <td class="image-col">
+        <img class="product-image" src="{{products[i].image}}" />
       </td>
       <td>
-        <a href="{{product.link}}" target="_blank">{{product.name}}</a>
+        <div class="name-col">
+          <a href="{{products[i].link}}" target="_blank">{{products[i].name}}</a>
+        </div>
       </td>
-      <td>{{product.price}}</td>
-      <td>{{product.numReviews}}</td>
-      <td>{{product.starRating}}</td>
+      <td>${{products[i].price}}</td>
+      <td>{{products[i].numReviews}}</td>
+      <td>{{products[i].starRating}}</td>
     </tr>
     {% endfor %}
   </table>
