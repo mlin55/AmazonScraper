@@ -9,17 +9,74 @@
   <h1 class="title">Amazon Scraper</h1>
   <p class="description-text">Enter the product you want to search for here, and Amazon
     Scraper will look over all
-    results from Amazon, sort them with a recommendation algorithm, and display them in order of most recommended to
+    results from Amazon, sort them with a personalized recommendation algorithm, and display them in order of most
+    recommended to
     least.</p>
+  <p class="description-text">To personalize the recommendations given to you, please fill out the dropdowns indicating
+    how much you value each category when evaluating a product. For example, a 5/5 in Price would mean you heavily favor
+    cheaper products, while a 2/5 in Star Rating means that a product's rating is not a big consideration when you shop.
+  </p>
   <form actions="/" method="POST" style="width: 70%">
+    <div class="dropdown-container">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
+          Number of reviews
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
+          Price
+        </button>
+        <input class="form-control" id="price-dropdown" name="priceDropdown" value="test">
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
+          Star Rating
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+        </div>
+      </div>
+    </div>
     <div class="search-form">
-      <input type="text" class="form-control" placeholder="Product Name" aria-label="Product Name"
-        aria-describedby="button-addon2" name="productInput">
-      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+      <input type="text" id="product-name-input" class="form-control" placeholder="Product Name"
+        aria-label="Product Name" aria-describedby="button-addon2" name="productName" required>
+      <input type="number" id="num-product-input" class="form-control" placeholder="Number of products to search"
+        aria-label="Number of products" aria-describedby="button-addon2" name="numProducts" required>
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2" onClick="show()">
+        Search
+      </button>
     </div>
   </form>
+  <div class="content" id="loading-div">
+    <h3 style="text-align: center">Your product is currently being searched for on Amazon! This can take up to 30
+      seconds, so please be patient.
+    </h3>
+    <img src="{{ url_for('static', filename='loadinggif.gif') }}" />
+  </div>
   {% if products|length > 0 %}
-  <p class="product-name-text"><strong>Search results for: {{productName}}</strong></p>
+  <p class="product-name-text"><strong>Top {{numProducts}} results for: {{productName}}</strong></p>
   <table class="table table-bordered" id="product-display-table">
     <tr>
       <th scope="col">#</th>
@@ -47,5 +104,12 @@
     {% endfor %}
   </table>
   {% endif %}
+  <script>
+    function show() {
+      if (document.getElementById('product-name-input').value.length > 0 && document.getElementById('num-product-input').value.length > 0) {
+        document.getElementById('loading-div').style.display = "flex";
+      }
+    }
+  </script>
 </div>
 {% endblock %}

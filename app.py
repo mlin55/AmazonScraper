@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect
 from scraper.scraper import scrapeForProduct, analyzeProductData
-from PIL import Image, ImageDraw
 
 app = Flask(__name__)
 
@@ -8,14 +7,15 @@ app = Flask(__name__)
 def index():
   products = []
   if request.method == 'POST':
-    try:
-      redirect('/loading')
-      product_name = request.form['productInput']
-      products = scrapeForProduct(product_name, 1)
-      analyzeProductData(products)
-      return render_template('index.html', products=products, productName=product_name)
-    except:
-      return 'There was an issue scraping the data for this product from Amazon'
+    # try:
+    product_name = request.form['productName']
+    num_products = int(request.form['numProducts'])
+    print(request.form['priceDropdown'])
+    products = scrapeForProduct(product_name, num_products)
+    analyzeProductData(products)
+    return render_template('index.html', products=products, productName=product_name, numProducts=num_products)
+    # except:
+    #   return 'There was an issue scraping the data for this product from Amazon'
   else:
     return render_template('index.html', products=products)
 

@@ -48,7 +48,7 @@ def displaySignificantData(products):
   # print(f"Link: {highestSR.link}\n")
 
 # Assigns each product in the list a value based on the number of reviews, price, and star rating, then returns them in sorted decreasing order
-def assignRecommendationScores(products):
+def assignRecommendationScores(products, reviewWeight, priceWeight, starWeight):
   N = len(products)
   # find average for numReviews, price, and starRating
   avgNumReviews, avgPrice, avgStarRating = 0, 0, 0
@@ -64,7 +64,7 @@ def assignRecommendationScores(products):
   avgPrice /= N
   avgStarRating /= N
   
-  # score = variance(numReviews) * 0.4 + variance(price) * 0.4 + variance(starRating) * 0.2 idk im not a statistician
+  # score = variance(numReviews) * reviewWeight + variance(price) * priceWeight + variance(starRating) * starWeight idk im not a statistician
   for i in range(N):
     if not products[i].numReviews or not products[i].price or float(products[i].price) == 0 or not products[i].starRating:
       products[i].assignScore(float('-inf'))
@@ -74,7 +74,7 @@ def assignRecommendationScores(products):
     priceScore = -1 * (float(products[i].price) - avgPrice) / avgPrice
     starRatingScore = (float(products[i].starRating) - avgStarRating) / avgStarRating
 
-    products[i].assignScore(reviewScore * 0.4 + priceScore * 0.4 + starRatingScore * 0.2)
+    products[i].assignScore(reviewScore * reviewWeight + priceScore * priceWeight + starRatingScore * starWeight)
   
   products.sort(key = lambda product : product.score, reverse = True)
   return products

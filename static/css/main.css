@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: sans-serif;
   background-color: rgb(168, 234, 248);
@@ -28,10 +32,22 @@ body {
   align-items: center;
 }
 
+.dropdown-container {
+  display: flex;
+}
+
+#price-dropdown {
+  display: none;
+}
+
 .search-form {
   margin-top: 1rem;
   margin-bottom: 1rem;
   display: flex;
+}
+
+#loading-div {
+  display: none;
 }
 
 .product-name-text {

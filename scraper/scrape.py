@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from scraper.product import Product
 from scraper.nav import findProperty, elementExists
 
-def scrape(productName, maxPageCount):
+def scrape(productName, numProducts):
   chrome_options = Options()
   chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
   s = Service('/usr/local/bin/chromedriver')
@@ -21,7 +21,7 @@ def scrape(productName, maxPageCount):
   productArr = []
   nextPage = 'placeholder'
   pageCount = 0
-  while pageCount < maxPageCount and nextPage:
+  while len(productArr) < numProducts and nextPage:
     # find next page button
     if elementExists(driver, "a[aria-label^='Go to next page']"):
       nextPage = findProperty(driver, "a[aria-label^='Go to next page']")
@@ -75,4 +75,4 @@ def scrape(productName, maxPageCount):
 
   driver.quit()
 
-  return productArr
+  return productArr[ : numProducts]
