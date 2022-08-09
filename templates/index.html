@@ -5,111 +5,165 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-  <h1 class="title">Amazon Scraper</h1>
-  <p class="description-text">Enter the product you want to search for here, and Amazon
-    Scraper will look over all
-    results from Amazon, sort them with a personalized recommendation algorithm, and display them in order of most
-    recommended to
-    least.</p>
-  <p class="description-text">To personalize the recommendations given to you, please fill out the dropdowns indicating
-    how much you value each category when evaluating a product. For example, a 5/5 in Price would mean you heavily favor
-    cheaper products, while a 2/5 in Star Rating means that a product's rating is not a big consideration when you shop.
-  </p>
-  <form actions="/" method="POST" style="width: 70%">
-    <div class="dropdown-container">
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
-          Number of reviews
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
+<div class="content-container">
+  <div class="content">
+    <h1 class="title">Amazon Scraper</h1>
+    <p class="description-text">Enter the product you want to search for here, and Amazon
+      Scraper will look over all
+      results from Amazon, sort them with a personalized recommendation algorithm, and display them in order of most
+      recommended to
+      least.</p>
+    <p class="description-text">To personalize the recommendations given to you, please fill out the dropdowns
+      indicating
+      how much you value each category when evaluating a product. For example, a 9/10 in Price would mean you heavily
+      favor
+      cheaper products, while a 0/10 in Star Rating means that a product's rating is not considered at all when you
+      shop.
+    </p>
+    <form actions="/" method="POST" class="form-container">
+      <div class="dropdown-container">
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" variant="secondary">
+            <span id="review-dropdown-text">
+              Number of reviews (5/10)
+            </span>
+          </button>
+          <input class="form-control" id="review-dropdown" name="reviewDropdown" value="5">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(0)">0</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(1)">1</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(2)">2</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(3)">3</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(4)">4</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(5)">5</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(6)">6</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(7)">7</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(8)">8</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(9)">9</a>
+            <a class="dropdown-item" href="#" onclick="setReviewDropdown(10)">10</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" variant="secondary">
+            <span id="price-dropdown-text">
+              Price (5/10)
+            </span>
+          </button>
+          <input class="form-control" id="price-dropdown" name="priceDropdown" value="5">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(0)">0</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(1)">1</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(2)">2</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(3)">3</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(4)">4</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(5)">5</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(6)">6</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(7)">7</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(8)">8</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(9)">9</a>
+            <a class="dropdown-item" href="#" onclick="setPriceDropdown(10)">10</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" variant="secondary">
+            <span id="rating-dropdown-text">
+              Star Rating (5/10)
+            </span>
+          </button>
+          <input class="form-control" id="rating-dropdown" name="ratingDropdown" value="5">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(0)">0</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(1)">1</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(2)">2</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(3)">3</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(4)">4</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(5)">5</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(6)">6</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(7)">7</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(8)">8</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(9)">9</a>
+            <a class="dropdown-item" href="#" onclick="setRatingDropdown(10)">10</a>
+          </div>
         </div>
       </div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
-          Price
+      <div class="search-form">
+        <input type="text" id="product-name-input" class="form-control" placeholder="Product Name"
+          aria-label="Product Name" aria-describedby="button-addon2" name="productName" required>
+        <input type="number" id="num-product-input" class="form-control" placeholder="Number of products to search"
+          aria-label="Number of products" aria-describedby="button-addon2" name="numProducts" required>
+        <button class="btn btn-secondary" type="submit" id="button-addon2" onClick="show()">
+          Search
         </button>
-        <input class="form-control" id="price-dropdown" name="priceDropdown" value="test">
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-        </div>
       </div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" variant="secondary">
-          Star Rating
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-        </div>
-      </div>
+    </form>
+    <div id="loading-div">
+      <h3 style="text-align: center">Your product is currently being searched for on Amazon! This can take up to 30
+        seconds, so please be patient.
+      </h3>
+      <img src="{{ url_for('static', filename='loadinggif.gif') }}" />
     </div>
-    <div class="search-form">
-      <input type="text" id="product-name-input" class="form-control" placeholder="Product Name"
-        aria-label="Product Name" aria-describedby="button-addon2" name="productName" required>
-      <input type="number" id="num-product-input" class="form-control" placeholder="Number of products to search"
-        aria-label="Number of products" aria-describedby="button-addon2" name="numProducts" required>
-      <button class="btn btn-outline-secondary" type="submit" id="button-addon2" onClick="show()">
-        Search
-      </button>
-    </div>
-  </form>
-  <div class="content" id="loading-div">
-    <h3 style="text-align: center">Your product is currently being searched for on Amazon! This can take up to 30
-      seconds, so please be patient.
-    </h3>
-    <img src="{{ url_for('static', filename='loadinggif.gif') }}" />
-  </div>
-  {% if products|length > 0 %}
-  <p class="product-name-text"><strong>Top {{numProducts}} results for: {{productName}}</strong></p>
-  <table class="table table-bordered" id="product-display-table">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Image</th>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Num Reviews</th>
-      <th scope="col">Stars</th>
-    </tr>
-    {% for i in range(products|length) %}
-    <tr>
-      <th scope="row">{{i + 1}}.</th>
-      <td class="image-col">
-        <img class="product-image" src="{{products[i].image}}" />
-      </td>
-      <td>
-        <div class="name-col">
-          <a href="{{products[i].link}}" target="_blank">{{products[i].name}}</a>
-        </div>
-      </td>
-      <td>${{products[i].price}}</td>
-      <td>{{products[i].numReviews}}</td>
-      <td>{{products[i].starRating}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% endif %}
-  <script>
-    function show() {
-      if (document.getElementById('product-name-input').value.length > 0 && document.getElementById('num-product-input').value.length > 0) {
-        document.getElementById('loading-div').style.display = "flex";
+    {% if products|length > 0 %}
+    <p class="product-name-text"><strong>Top {{numProducts}} results for: {{productName}}</strong></p>
+    <table class="table" id="product-display-table">
+      <thead class="thead">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Num Reviews</th>
+          <th scope="col">Stars</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in range(products|length) %}
+        <tr>
+          <th scope="row">{{i + 1}}.</th>
+          <td class="image-col">
+            <img class="product-image" src="{{products[i].image}}" />
+          </td>
+          <td>
+            <div class="name-col">
+              <a href="{{products[i].link}}" target="_blank">{{products[i].name}}</a>
+            </div>
+          </td>
+          <td>${{products[i].price}}</td>
+          <td>{{products[i].numReviews}}</td>
+          <td>{{products[i].starRating}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <script>
+      function show() {
+        if (document.getElementById('product-name-input').value.length > 0 && document.getElementById('num-product-input').value.length > 0) {
+          document.getElementById('loading-div').style.display = "flex";
+        }
       }
-    }
-  </script>
+
+      function setReviewDropdown(val) {
+        document.getElementById('review-dropdown').value = val;
+        document.getElementById('review-dropdown-text').innerHTML = "Number of reviews (" + val + "/10)";
+      }
+
+      function setPriceDropdown(val) {
+        document.getElementById('price-dropdown').value = val;
+        document.getElementById('price-dropdown-text').innerHTML = "Price (" + val + "/10)";
+      }
+
+      function setRatingDropdown(val) {
+        document.getElementById('rating-dropdown').value = val;
+        console.log(document.getElementById('rating-dropdown-text'));
+        document.getElementById('rating-dropdown-text').innerHTML = "Star Rating (" + val + "/10)";
+      }
+    </script>
+  </div>
+</div>
+<div class="footer">
+  Made by Matthew Lin, © 2022. This project is not affiliated with Amazon in any way.
 </div>
 {% endblock %}

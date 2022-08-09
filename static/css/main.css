@@ -1,6 +1,9 @@
+/* 366EB4    F19904    23303E */
+
 * {
   margin: 0;
   padding: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 html {
@@ -8,35 +11,80 @@ html {
 }
 
 body {
-  font-family: sans-serif;
-  background-color: rgb(168, 234, 248);
+  background-image: linear-gradient(180deg, #ec9f05, #ff4e00);
+  color: white;
 }
 
 .title {
-  margin-top: 20rem;
   margin-bottom: 1.5rem;
 }
 
 .description-text {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .content {
-  margin-top: 2rem;
   margin-left: 20rem;
   margin-right: 20rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding: 2rem;
+
+  border-style: solid;
+  border-width: 0.2rem;
+  border-radius: 2rem;
+  border-color: #366eb4;
+
+  /* background-color: rgba(54, 110, 180, 0.6); */
+  background-color: rgb(41, 38, 38);
+}
+
+.form-container {
+  width: 100%;
+  border-top: solid;
+  border-width: 0.2rem;
+  border-color: #366eb4;
+  padding: 5rem;
 }
 
 .dropdown-container {
   display: flex;
+  width: 100%;
+  margin-bottom: 3rem;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#dropdownMenuButton {
+  padding: 1rem;
+}
+
+#dropdownMenuButton:hover {
+  background-color: rgb(41, 38, 38);
+  border-color: rgb(41, 38, 38);
+  color: white;
 }
 
 #price-dropdown {
+  display: none;
+}
+
+#review-dropdown {
+  display: none;
+}
+
+#rating-dropdown {
   display: none;
 }
 
@@ -44,6 +92,15 @@ body {
   margin-top: 1rem;
   margin-bottom: 1rem;
   display: flex;
+  justify-content: space-evenly;
+}
+
+#product-name-input {
+  width: 40%;
+}
+
+#num-product-input {
+  width: 40%;
 }
 
 #loading-div {
@@ -53,11 +110,16 @@ body {
 .product-name-text {
   margin-top: 2rem;
   margin-bottom: 2rem;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 #product-display-table {
-  font-size: 2rem;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.thead {
+  /* color: rgb(41, 38, 38); */
 }
 
 .image-col {
@@ -76,6 +138,18 @@ body {
 td {
   text-align: center;
   padding: 1rem;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  background-color: rgb(41, 38, 38);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3rem;
 }
 
 /* table,
