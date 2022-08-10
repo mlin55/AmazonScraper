@@ -11,7 +11,11 @@ html {
 }
 
 body {
-  background-image: linear-gradient(180deg, #ec9f05, #ff4e00);
+  background-image: linear-gradient(
+    180deg,
+    rgba(236, 159, 5, 0.8),
+    rgba(255, 78, 0, 1)
+  );
   color: white;
 }
 
@@ -41,20 +45,19 @@ body {
 
   padding: 2rem;
 
-  border-style: solid;
-  border-width: 0.2rem;
   border-radius: 2rem;
-  border-color: #366eb4;
+
+  box-shadow: 0.625rem 0.625rem 0.563rem 0rem rgba(0, 0, 0, 0.63);
 
   /* background-color: rgba(54, 110, 180, 0.6); */
-  background-color: rgb(41, 38, 38);
+  background-image: linear-gradient(360deg, rgb(41, 38, 38), rgb(64, 63, 63));
 }
 
 .form-container {
   width: 100%;
   border-top: solid;
   border-width: 0.2rem;
-  border-color: #366eb4;
+  border-color: rgba(255, 78, 0);
   padding: 5rem;
 }
 
@@ -103,8 +106,22 @@ body {
   width: 40%;
 }
 
+#button-addon2:hover {
+  background-color: rgb(41, 38, 38);
+  border-color: rgb(41, 38, 38);
+  color: white;
+}
+
 #loading-div {
   display: none;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-gif {
+  width: 5rem;
 }
 
 .product-name-text {
@@ -119,7 +136,8 @@ body {
 }
 
 .thead {
-  /* color: rgb(41, 38, 38); */
+  color: black;
+  background-color: white;
 }
 
 .image-col {
@@ -131,6 +149,10 @@ body {
   height: auto;
 }
 
+.product-link {
+  color: white;
+}
+
 .name-col {
   max-width: 40rem;
 }
@@ -140,33 +162,29 @@ td {
   padding: 1rem;
 }
 
+table.table > tbody > tr:hover td,
+table.table > tbody > tr:hover th {
+  background-color: rgb(92, 92, 92) !important;
+}
+
+#github-icon {
+  position: fixed;
+  right: 2rem;
+  top: 2rem;
+
+  font-size: 5rem;
+
+  color: white;
+}
+
 .footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
 
-  background-color: rgb(41, 38, 38);
+  background-image: linear-gradient(rgb(82, 80, 80), rgb(41, 38, 38));
   text-align: center;
   vertical-align: middle;
   line-height: 3rem;
 }
-
-/* table,
-td,
-th {
-  border: 0.1rem solid #aaa;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th {
-  height: 3rem;
-}
-
-td {
-  text-align: center;
-  padding: 1rem;
-} */

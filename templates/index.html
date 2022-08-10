@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="content-container">
-  <div class="content">
+  <div class="content animate__animated animate__bounceInDown">
     <h1 class="title">Amazon Scraper</h1>
     <p class="description-text">Enter the product you want to search for here, and Amazon
       Scraper will look over all
@@ -94,7 +94,7 @@
           aria-label="Product Name" aria-describedby="button-addon2" name="productName" required>
         <input type="number" id="num-product-input" class="form-control" placeholder="Number of products to search"
           aria-label="Number of products" aria-describedby="button-addon2" name="numProducts" required>
-        <button class="btn btn-secondary" type="submit" id="button-addon2" onClick="show()">
+        <button class="btn btn-light" type="submit" id="button-addon2" onClick="show()">
           Search
         </button>
       </div>
@@ -103,11 +103,11 @@
       <h3 style="text-align: center">Your product is currently being searched for on Amazon! This can take up to 30
         seconds, so please be patient.
       </h3>
-      <img src="{{ url_for('static', filename='loadinggif.gif') }}" />
+      <img class="loading-gif" src="{{ url_for('static', filename='loading.gif') }}" />
     </div>
     {% if products|length > 0 %}
     <p class="product-name-text"><strong>Top {{numProducts}} results for: {{productName}}</strong></p>
-    <table class="table" id="product-display-table">
+    <table class="table table-bordered" id="product-display-table">
       <thead class="thead">
         <tr>
           <th scope="col">#</th>
@@ -123,11 +123,11 @@
         <tr>
           <th scope="row">{{i + 1}}.</th>
           <td class="image-col">
-            <img class="product-image" src="{{products[i].image}}" />
+            <a href="{{products[i].link}}" target="_blank"><img class="product-image" src="{{products[i].image}}" /></a>
           </td>
           <td>
             <div class="name-col">
-              <a href="{{products[i].link}}" target="_blank">{{products[i].name}}</a>
+              <a class="product-link" href="{{products[i].link}}" target="_blank">{{products[i].name}}</a>
             </div>
           </td>
           <td>${{products[i].price}}</td>
@@ -142,6 +142,7 @@
       function show() {
         if (document.getElementById('product-name-input').value.length > 0 && document.getElementById('num-product-input').value.length > 0) {
           document.getElementById('loading-div').style.display = "flex";
+          document.getElementById('button-addon2').style.display = "none";
         }
       }
 
@@ -162,8 +163,10 @@
       }
     </script>
   </div>
+  <a href="https://github.com/mlin55/AmazonScraper" target="_blank"><i id="github-icon"
+      class="bi bi-github animate__animated animate__bounceInDown"></i></a>
 </div>
-<div class="footer">
+<div class="footer animate__animated animate__fadeInLeft">
   Made by Matthew Lin, © 2022. This project is not affiliated with Amazon in any way.
 </div>
 {% endblock %}
