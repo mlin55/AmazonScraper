@@ -34,19 +34,6 @@ def displaySignificantData(products):
         maxStarRating = starRating
         highestSR = product
 
-  # print(f"Cheapest product: {cheapest.name}")
-  # print(f"Link: {cheapest.link}\n")
-  # print(f"Most expensive product: {mostExpensive.name}")
-  # print(f"Link: {mostExpensive.link}\n")
-  # print(f"Least reviewed product: {leastReviewed.name}")
-  # print(f"Link: {leastReviewed.link}\n")
-  # print(f"Most reviewed product: {mostReviewed.name}")
-  # print(f"Link: {mostReviewed.link}\n")
-  # print(f"Lowest star rating product (out of 5): {lowestSR.name}")
-  # print(f"Link: {lowestSR.link}\n")
-  # print(f"Highest star rating product (out of 5): {highestSR.name}")
-  # print(f"Link: {highestSR.link}\n")
-
 # Assigns each product in the list a value based on the number of reviews, price, and star rating, then returns them in sorted decreasing order
 def assignRecommendationScores(products, reviewWeight, priceWeight, starWeight):
   N = len(products)
