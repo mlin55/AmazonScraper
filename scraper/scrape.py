@@ -16,14 +16,10 @@ def scrape(productName, numProducts):
   s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
   # s = Service('/usr/local/bin/chromedriver')
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
-  print(driver)
   # go to product results page
   driver.get('https://www.amazon.com')
-
-  searchBar1 = driver.find_element(By.CSS_SELECTOR, "input[id='twotabsearchtextbox']")
-  searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
-  print(searchBar1)
-  print(searchBar)
+  if elementExists(driver, "input[id='twotabsearchtextbox']"):
+    searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
   searchBar.send_keys(Keys.RETURN)
 
