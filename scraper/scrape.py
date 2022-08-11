@@ -5,9 +5,10 @@ from selenium.webdriver.common.keys import Keys
 from scraper.product import Product
 from scraper.nav import findProperty, elementExists
 import os
+import undetected_chromedriver as uc
 
 def scrape(productName, numProducts):
-  chrome_options = webdriver.ChromeOptions()
+  chrome_options = uc.ChromeOptions()
   chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
   # chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
   chrome_options.add_argument("--headless")
@@ -18,10 +19,11 @@ def scrape(productName, numProducts):
   chrome_options.add_argument('--window-size=1920x1480')
   s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
   # s = Service('/usr/local/bin/chromedriver')
-  driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+  driver = uc.Chrome(executable_path='/usr/local/bin/chromedriver', options=chrome_options)
   # go to product results page
   driver.get('https://www.amazon.com')
   print(driver.page_source)
+  
   if elementExists(driver, "input[id='twotabsearchtextbox']"):
     searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
