@@ -24,8 +24,11 @@ def scrape(productName, numProducts):
   divs = findProperty(driver, "div")
   print("DIVS")
   print(divs)
-  # if elementExists(driver, "input[id='twotabsearchtextbox']"):
-  searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
+  sprites = findProperty(driver, "a[id='nav-logo-sprites']")
+  print('SPRITES')
+  print(sprites)
+  if elementExists(driver, "input[id='twotabsearchtextbox']"):
+    searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
   searchBar.send_keys(Keys.RETURN)
 
