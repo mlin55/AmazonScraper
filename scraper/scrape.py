@@ -2,24 +2,25 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from scraper.product import Product
 from scraper.nav import findProperty, elementExists
 import os
 
 def scrape(productName, numProducts):
-  chrome_options = Options()
-  chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+  chrome_options = webdriver.ChromeOptions()
+  # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+  chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
   chrome_options.add_argument("--headless")
   chrome_options.add_argument("--disable-dev-shm-usage")
   chrome_options.add_argument("--no-sandbox")
-  s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+  # s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+  s = Service('/usr/local/bin/chromedriver')
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
-  print(os.environ.get("GOOGLE_CHROME_BIN"))
-  print(os.environ.get("CHROMEDRIVER_PATH"))
   # go to product results page
   driver.get('https://www.amazon.com')
-  searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
+
+  searchBar = driver.find_element(By.CSS_SELECTOR, "input[id='twotabsearchtextbox']")
+  # searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
   searchBar.send_keys(Keys.RETURN)
 
