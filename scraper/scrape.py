@@ -9,6 +9,9 @@ from scraper.nav import findProperty, elementExists
 def scrape(productName, numProducts):
   chrome_options = Options()
   chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
+  chrome_options.add_argument("--headless")
+  chrome_options.add_argument("--disable-dev-shm-usage")
+  chrome_options.add_argument("--no-sandbox")
   s = Service('/usr/local/bin/chromedriver')
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
