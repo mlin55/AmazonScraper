@@ -21,12 +21,7 @@ def scrape(productName, numProducts):
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
   # go to product results page
   driver.get('https://www.amazon.com')
-  divs = findProperty(driver, "div")
-  print("DIVS")
-  print(divs)
-  sprites = findProperty(driver, "a[id='nav-logo-sprites']")
-  print('SPRITES')
-  print(sprites)
+  print(driver.page_source)
   if elementExists(driver, "input[id='twotabsearchtextbox']"):
     searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
