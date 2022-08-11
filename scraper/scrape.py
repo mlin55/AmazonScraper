@@ -5,14 +5,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from scraper.product import Product
 from scraper.nav import findProperty, elementExists
+import os
 
 def scrape(productName, numProducts):
   chrome_options = Options()
-  chrome_options.binary_location = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta"
+  chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
   chrome_options.add_argument("--headless")
   chrome_options.add_argument("--disable-dev-shm-usage")
   chrome_options.add_argument("--no-sandbox")
-  s = Service('/usr/local/bin/chromedriver')
+  s = Service(os.environ.get("CHROMEDRIVER_PATH"))
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
   # go to product results page
