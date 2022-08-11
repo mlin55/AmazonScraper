@@ -13,13 +13,16 @@ def scrape(productName, numProducts):
   chrome_options.add_argument("--headless")
   chrome_options.add_argument("--disable-dev-shm-usage")
   chrome_options.add_argument("--no-sandbox")
+  chrome_options.add_argument("--disable-gpu")
+  chrome_options.add_argument("--remote-debugging-port=9222")
+  chrome_options.add_argument('--window-size=1920x1480')
   s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
   # s = Service('/usr/local/bin/chromedriver')
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
   # go to product results page
   driver.get('https://www.amazon.com')
-  if elementExists(driver, "input[id='twotabsearchtextbox']"):
-    searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
+  # if elementExists(driver, "input[id='twotabsearchtextbox']"):
+  searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
   searchBar.send_keys(productName)
   searchBar.send_keys(Keys.RETURN)
 
