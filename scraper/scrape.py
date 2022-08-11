@@ -17,8 +17,7 @@ def scrape(productName, numProducts):
   chrome_options.add_argument("--disable-gpu")
   chrome_options.add_argument("--remote-debugging-port=9222")
   chrome_options.add_argument('--window-size=1920x1480')
-  # s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
-  # s = Service('/usr/local/bin/chromedriver')
+
   driver = uc.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
   # go to product results page
   driver.get('https://www.amazon.com')
