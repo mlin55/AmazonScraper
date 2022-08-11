@@ -15,7 +15,8 @@ def scrape(productName, numProducts):
   chrome_options.add_argument("--no-sandbox")
   s = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
   driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
-
+  print(os.environ.get("GOOGLE_CHROME_BIN"))
+  print(os.environ.get("CHROMEDRIVER_PATH"))
   # go to product results page
   driver.get('https://www.amazon.com')
   searchBar = findProperty(driver, "input[id='twotabsearchtextbox']")
